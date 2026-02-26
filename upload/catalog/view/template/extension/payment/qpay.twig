@@ -1,0 +1,13 @@
+<div class="text-center">
+  <button type="button" id="button-qpay" class="btn btn-primary btn-lg">QPay-ээр төлөх</button>
+</div>
+<script>
+document.getElementById('button-qpay').addEventListener('click', function() {
+  fetch('{{ action }}', { method: 'POST', headers: {'Content-Type': 'application/json'} })
+    .then(r => r.json())
+    .then(data => {
+      if (data.redirect) window.location.href = data.redirect;
+      else alert(data.error || 'Error');
+    });
+});
+</script>

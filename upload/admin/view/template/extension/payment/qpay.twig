@@ -1,0 +1,60 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <h1>{{ heading_title }}</h1>
+      <div class="float-end">
+        <button type="submit" form="form-qpay" class="btn btn-primary">Save</button>
+        <a href="{{ cancel }}" class="btn btn-light">Cancel</a>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <form action="{{ action }}" method="post" id="form-qpay">
+          <div class="mb-3">
+            <label class="form-label">Status</label>
+            <select name="payment_qpay_status" class="form-select">
+              <option value="1" {% if payment_qpay_status == '1' %}selected{% endif %}>Enabled</option>
+              <option value="0" {% if payment_qpay_status != '1' %}selected{% endif %}>Disabled</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">API Base URL</label>
+            <input type="text" name="payment_qpay_base_url" value="{{ payment_qpay_base_url }}" class="form-control" placeholder="https://merchant.qpay.mn">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input type="text" name="payment_qpay_username" value="{{ payment_qpay_username }}" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" name="payment_qpay_password" value="{{ payment_qpay_password }}" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Invoice Code</label>
+            <input type="text" name="payment_qpay_invoice_code" value="{{ payment_qpay_invoice_code }}" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Callback URL</label>
+            <input type="text" name="payment_qpay_callback_url" value="{{ payment_qpay_callback_url }}" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Order Status (Paid)</label>
+            <select name="payment_qpay_order_status_id" class="form-select">
+              {% for status in order_statuses %}
+                <option value="{{ status.order_status_id }}" {% if payment_qpay_order_status_id == status.order_status_id %}selected{% endif %}>{{ status.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Sort Order</label>
+            <input type="text" name="payment_qpay_sort_order" value="{{ payment_qpay_sort_order }}" class="form-control">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}
