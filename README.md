@@ -1,6 +1,7 @@
 # QPay OpenCart Extension
 
 [![CI](https://github.com/qpay-sdk/qpay-opencart/actions/workflows/ci.yml/badge.svg)](https://github.com/qpay-sdk/qpay-opencart/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 QPay V2 payment extension for OpenCart 4.x.
 
