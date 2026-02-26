@@ -1,5 +1,7 @@
 # QPay OpenCart Extension
 
+[![CI](https://github.com/qpay-sdk/qpay-opencart/actions/workflows/ci.yml/badge.svg)](https://github.com/qpay-sdk/qpay-opencart/actions)
+
 QPay V2 payment extension for OpenCart 4.x.
 
 ## Install
