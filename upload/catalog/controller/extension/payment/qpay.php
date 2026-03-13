@@ -77,10 +77,40 @@ class QPay extends \Opencart\System\Engine\Controller {
     }
 
     public function callback(): void {
-        $body = json_decode(file_get_contents('php://input'), true);
-        $invoice_id = $body['invoice_id'] ?? '';
-        // Webhook handling - verify and update order
-        $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode(['status' => 'ok']));
+        $payment_id = $this->request->get['qpay_payment_id'] ?? '';
+
+        if (empty($payment_id)) {
+            $this->response->addHeader('Content-Type: text/plain');
+            $this->response->setOutput('Missing qpay_payment_id');
+            return;
+        }
+
+        require_once DIR_SYSTEM . 'library/qpay.php';
+        $qpay = new \QPay(
+            $this->config->get('payment_qpay_base_url') ?: 'https://merchant.qpay.mn',
+            $this->config->get('payment_qpay_username'),
+            $this->config->get('payment_qpay_password')
+        );
+
+        $result = $qpay->checkPayment($payment_id);
+        $paid = !empty($result['rows']);
+
+        if ($paid) {
+            $this->load->model('checkout/order');
+            $sender_invoice_no = $result['rows'][0]['sender_invoice_no'] ?? '';
+            $order_id = (int) $sender_invoice_no;
+
+            if ($order_id) {
+                $this->model_checkout_order->addHistory(
+                    $order_id,
+                    (int) $this->config->get('payment_qpay_order_status_id'),
+                    'QPay payment confirmed (payment_id: ' . $payment_id . ')',
+                    true
+                );
+            }
+        }
+
+        $this->response->addHeader('Content-Type: text/plain');
+        $this->response->setOutput('SUCCESS');
     }
 }
