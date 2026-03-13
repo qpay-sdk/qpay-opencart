@@ -1,6 +1,6 @@
 {
     "name": "QPay Payment Gateway",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "QPay SDK",
     "link": "https://github.com/qpay-sdk/qpay-opencart",
     "description": "QPay V2 payment gateway for OpenCart. Accept payments via QR code and bank app deeplinks in Mongolia."
